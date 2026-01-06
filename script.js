@@ -4,7 +4,6 @@ import readline from "node:readline";
 
 // Parsing 
 const short_stories = JSON.parse(await readFile("stories.json", "utf8"));
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 const command = process.argv[2];
 
 // Date set-up
@@ -13,10 +12,12 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 
 if (command == "daily") {
     const story = short_stories[Math.floor(Math.random() * short_stories.length)];
-    const day = days[Math.floor(Math.random() * days.length)];
-    console.log("Today is ${day},  {days[today.getDay()]}.");
-    console.log("The daily selection is ${story.title} by ${story.author}.");
-} else {
-    console.log("Apologies, this is an unfamiliar command.")
-}
+    const weekday = days[today.getDay()];
+    const dateStr = today.toDateString();
+    const date = dateStr.slice(4, dateStr.length);
 
+    console.log(`Today's date is ${date}, a ${weekday}.`);
+    console.log(`The daily selection is ${story.title} by ${story.author}.`);
+} else {
+    console.log("Apologies, this is an unfamiliar command.");
+}
