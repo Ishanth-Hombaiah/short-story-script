@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from "node:fs";
-import readline from "node:readline";
+import { readFile } from "node:fs/promises";
 
 // Parsing 
 const short_stories = JSON.parse(await readFile("stories.json", "utf8"));
@@ -13,8 +12,7 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 if (command == "daily") {
     const story = short_stories[Math.floor(Math.random() * short_stories.length)];
     const weekday = days[today.getDay()];
-    const dateStr = today.toDateString();
-    const date = dateStr.slice(4, dateStr.length);
+    const date = today.toDateString().slice(4);
 
     console.log(`Today's date is ${date}, a ${weekday}.`);
     console.log(`The daily selection is ${story.title} by ${story.author}.`);
