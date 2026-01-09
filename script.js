@@ -9,16 +9,19 @@ const state = JSON.parse(await readFile("state.json"))
 const today = new Date(); 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+//Check if out of stories
 if (state.used.length === short_stories.length) {
     console.log("There are no stories remaining.");
     process.exit(0);
 }
 
+// Pick story and mark as read
 const unused = short_stories.filter(s => !state.used.includes(s.id));
 const story = unused[Math.floor(Math.random() * unused.length)];
 state.used.push(story.id);
 await writeFile("state.json", JSON.stringify(state));
 
+// Date formatting
 const weekday = days[today.getDay()];
 const date = today.toDateString().slice(4);
 
